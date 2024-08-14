@@ -1,11 +1,12 @@
 import os
+import argparse
 import jwt
 from cryptography.hazmat.primitives import serialization
 import requests
 import time
 from urllib3.exceptions import InsecureRequestWarning
 import logging
-from python_dotenv import load_dotenv
+from dotenv import load_dotenv
 
 # Suppress the warnings from urllib3
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -203,7 +204,7 @@ def get_vcsa_user_id(userName) -> None:
 
 
 # Return the vcsa group id
-def get_vcsa_group_id(groupName):
+def get_vcsa_group_id(groupName) -> None:
 
     try:
         response = get(f"https://{VCSA_HOST}/{VCSA_APIGROUPS}", VCSA_HEADERS)
@@ -453,15 +454,42 @@ def get_vcenter_members_of_group(groupName):
 # Main function
 def main():
 
-    print("Select an option: \n\t1. Sync \n\t2. Create group \n\t3. Delete group")
-    action = input()
+    parser = argparse.ArgumentParser(
+        description="Sync group from Okta to vCenter or create/delete vCenter group."
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "--sync",
+        type=str,
+        help="sync the group from Okta to vCenter",
+        metavar="groupName",
+    )
+    group.add_argument(
+        "--create", type=str, help="create the vCenter group", metavar="groupName"
+    )
+    group.add_argument(
+        "--delete", type=str, help="delete the vCenter group", metavar="groupName"
+    )
 
-    print("Insert the group name:")
-    groupName = input()
+    args = parser.parse_args()
+
+    if args.sync:
+        action = "1"
+        groupName = args.sync
+    elif args.create:
+        action = "2"
+        groupName = args.create
+    elif args.delete:
+        action = "3"
+        groupName = args.delete
+    else:
+        print("Select an option: \n\t1. Sync \n\t2. Create group \n\t3. Delete group")
+        action = input()
+        print("Insert the group name:")
+        groupName = input()
 
     if action == "1" and groupName != "":
         # sync group
-
         okta_users = get_okta_members_of_group(groupName)
         vcsa_users = get_vcenter_members_of_group(groupName)
 

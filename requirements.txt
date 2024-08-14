@@ -6,3 +6,4 @@ urllib3==2.2.1
 PyJWT
 python_dotenv
 cryptography
+argparse
