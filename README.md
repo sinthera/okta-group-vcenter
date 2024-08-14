@@ -69,8 +69,8 @@ python3 main.py  --sync | --create | --delete GROUPNAME
 ```
 Note:
 
-Only one of --sync, --create, or --delete can be used at a time.
-GROUPNAME is a required positional argument representing the name of the group to be processed.
+Only one of `--sync`, `--create`, or `--delete` can be used at a time.
+`GROUPNAME` is a required positional argument representing the name of the group to be processed.
 
 For more details, run: 
 ```bash
