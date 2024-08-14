@@ -454,8 +454,10 @@ def get_vcenter_members_of_group(groupName):
 # Main function
 def main():
 
+    description = "This Python script handles some basics user and group operations into a vCenter from Okta source. It interacts with Okta and vCenter through the Okta API and through the vCenter SCIM API, using HTTP requests exclusively for managing user and group operations. The admitted operations are 3:\n\t1.Syncing group members from Okta to vCenter - create or delete user where is necessary;\n\t2.Create vCenter group;\n\t3.Delete vCenter group;\n\nAdditionally, the script logs events and errors for monitoring purposes."
+
     parser = argparse.ArgumentParser(
-        description="Sync group from Okta to vCenter or create/delete vCenter group."
+        description=description, formatter_class=argparse.RawTextHelpFormatter
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
