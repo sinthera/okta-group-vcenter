@@ -56,21 +56,23 @@ source venv/bin/activate
 python3 main.py
 ```
 
-Then enter '`1`', '`2`' or '`3`' to:
+Then enter '`1`', '`2`', '`3`' or '`4`' to:
 1. **Sync** the group from okta to vCenter. If some users missing in the vCenter group then create them, if some users are not in the okta group then delete them;
 2. **Create** the group in vCenter;
 3. **Delete** the group in vCenter;
+4. **Test** the connection to Okta or vCenter;
    
-Now enter the `group name` case insensitive to process.
+Then enter the `group` (or `groups`) name or the object to test (`okta` or `vcenter`) case insensitive to process.
 
 Alternative Usage:
 ```bash
-python3 main.py  --sync | --create | --delete GROUPNAME
+python3 main.py  --sync GROUPNAME | --create GROUPNAME | --delete GROUPNAME | --test OBJ
 ```
 Note:
 
-Only one of `--sync`, `--create`, or `--delete` can be used at a time.
-`GROUPNAME` is a required positional argument representing the name of the group to be processed.
+Only one of --sync, --create, --delete or --test can be used at a time. It is possible to sync more than one group at time specifing more than one group, eg. `python3 main.py --sync teamA admins dev`
+
+In case of the group operations GROUPNAME is a required positional argument representing the name of the group to be processed.
 
 For more details, run: 
 ```bash
